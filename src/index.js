@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Square extends React.Component {
+/* class Square extends React.Component {
   
   render() {
     return (
@@ -14,19 +14,33 @@ class Square extends React.Component {
     );
   }
 }
+ */
+ 
+ //The square class is equivalent to this function
+ function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
+}
 
 class Board extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			squares: Array(9).fill(null),
+			xIsNext: true,
 		};
 	}
 	
 	handleClick(i) {
-    const squares = this.state.squares.slice();
-    squares[i] = 'X';
-    this.setState({squares: squares});
+    const squares = this.state.squares.slice(); //Makes copy of the squares array
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+		squares: squares,
+		xIsNext: !this.state.xIsNext, //Flip the value of xIsNext
+		});
   }
 	
   renderSquare(i) {
